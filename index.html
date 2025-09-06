@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Advanced Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a192f;
+        }
+        #timeline-progress {
+    transition: height 0.1s linear;
+}
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        .content-container { position: relative; z-index: 1; }
+        .btn-gradient {
+            background-image: linear-gradient(to right, #06b6d4, #22d3ee, #06b6d4);
+            background-size: 200% auto;
+            transition: 0.5s;
+        }
+        .btn-gradient:hover { background-position: right center; }
+        .project-card {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .project-card .project-details {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;
+            background: linear-gradient(to top, rgba(10, 25, 47, 1) 50%, rgba(10, 25, 47, 0));
+            transform: translateY(100%); opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+        }
+        .project-card:hover .project-details { transform: translateY(0); opacity: 1; }
+        .project-card img { transition: transform 0.4s ease-out; }
+        .project-card:hover img { transform: scale(1.05); }
+        .project-card.hidden {
+            transform: scale(0.9); opacity: 0; width: 0;
+            padding: 0; margin: 0; overflow: hidden;
+        }
+        .scroll-down { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 2; }
+        .scroll-down .mouse { width: 30px; height: 50px; border: 2px solid #06b6d4; border-radius: 60px; position: relative; }
+        .scroll-down .mouse::before {
+            content: ''; width: 8px; height: 8px; position: absolute; top: 10px; left: 50%;
+            transform: translateX(-50%); background-color: #06b6d4; border-radius: 50%;
+            opacity: 1; animation: wheel 2s infinite;
+        }
+        @keyframes wheel { to { opacity: 0; top: 30px; } }
+        
+        /* New Timeline Styles */
+        .timeline-dot.active {
+            background-color: #06b6d4;
+            border-color: #0a192f;
+        }
+        
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <header class="bg-slate-900/90 fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-cyan-400 tracking-wider">Portfolio</a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-cyan-400 transition duration-300">About</a>
+                <a href="#skills" class="hover:text-cyan-400 transition duration-300">Skills</a>
+                <a href="#projects" class="hover:text-cyan-400 transition duration-300">Projects</a>
+                <a href="#contact" class="btn-gradient text-white font-semibold px-5 py-2 rounded-lg">Contact Me</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-lucide="menu" class="text-white"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-4 sm:px-6 pb-4">
+            <a href="#about" class="block py-2 hover:text-cyan-400">About</a>
+            <a href="#skills" class="block py-2 hover:text-cyan-400">Skills</a>
+            <a href="#projects" class="block py-2 hover:text-cyan-400">Projects</a>
+            <a href="#contact" class="block mt-2 btn-gradient text-white font-semibold px-4 py-2 rounded-lg text-center">Contact Me</a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <section id="home" class="relative min-h-screen flex items-center py-10">
+            <div id="particles-js"></div>
+            <div class="container mx-auto px-4 sm:px-6 content-container flex flex-col md:flex-row items-center text-center md:text-left">
+                <div class="md:w-1/2 order-2 md:order-1 mt-10 md:mt-0" data-aos="fade-right">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+                        <span class="block text-gray-200">Hello, I'm</span>
+                        <span class="block text-cyan-400 mt-2">Arpit Shukla</span>
+                    </h1>
+                    <p class="mt-4 text-lg md:text-xl text-gray-400">
+                        A passionate <span id="typed-text" class="font-semibold text-cyan-300"></span> dedicated to building amazing digital experiences.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4">
+                        <a href="assets/Arpit-Shukla-CV.pdf" download="Arpit-Shukla-CV.pdf" class="w-full sm:w-auto btn-gradient text-white font-bold py-3 px-6 rounded-lg text-center">Download CV</a>
+                        <a href="#projects" class="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 text-center">See My Work</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center items-center order-1 md:order-2" data-aos="fade-left" data-aos-delay="200">
+                    <img src="images/Gemini_Generated_Image_nzdji2nzdji2nzdj.png" alt="Profile Photo" class="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full object-cover border-4 border-cyan-400/50 drop-shadow-[0_20px_20px_rgba(6,182,212,0.25)]">
+                </div>
+            </div>
+            <div class="scroll-down hidden md:block"><div class="mouse"></div></div>
+        </section>
+
+        <section id="about" class="py-16 md:py-20 bg-slate-800/50">
+            <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">About Me</h2>
+                <div class="w-full max-w-3xl mx-auto">
+                    <p class="text-gray-300 leading-relaxed text-center md:text-left">
+                        Hello! I'm a [Your Profession], based in [City/Country]. I have a passion for developing intuitive and user-friendly web applications. I strive to create software that not only functions flawlessly but also provides a meaningful solution to real-world problems. I'm a lifelong learner, always eager to explore new technologies and frameworks.
+                    </p>
+                    
+                    <div id="timeline-container" class="relative mt-12 pl-8">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-slate-700 rounded-full">
+                             <div id="timeline-progress" class="w-full bg-cyan-400 rounded-full" style="height: 0%;"></div>
+                        </div>
+
+                        <div id="education-section" class="relative mb-16">
+                            <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-700 rounded-full border-4 border-slate-900 transition-colors duration-300"></div>
+                            <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Education</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-slate-800/50 rounded-lg">
+                                    <p class="font-bold text-lg text-gray-200">Bachelor of Technology, CSE</p>
+                                    <p class="text-gray-400">[Your University Name], [City]</p>
+                                    <p class="text-sm text-gray-500">2021 - 2025</p>
+                                </div>
+                                 <div class="p-4 bg-slate-800/50 rounded-lg">
+                                    <p class="font-bold text-lg text-gray-200">Intermediate (Class XII)</p>
+                                    <p class="text-gray-400">[Your School/College Name]</p>
+                                    <p class="text-sm text-gray-500">2020</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="profiles-section" class="relative">
+                            <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-700 rounded-full border-4 border-slate-900 transition-colors duration-300"></div>
+                            <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Profiles & Socials</h3>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:text-cyan-400 text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
+                                    <i data-lucide="github" class="w-5 h-5"></i> GitHub
+                                </a>
+                                <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:text-cyan-400 text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
+                                    <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
+                                </a>
+                                <a href="https://leetcode.com/your-username/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:text-cyan-400 text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
+                                    <i data-lucide="code-2" class="w-5 h-5"></i> LeetCode
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="skills" class="py-16 md:py-20">
+            <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">My Skills</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8">
+                    <div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="100"><i data-lucide="html5" class="w-16 h-16 text-cyan-400 mb-4"></i><h3 class="font-semibold text-lg">HTML5</h3></div>
+                    <div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="150"><i data-lucide="file-json-2" class="w-16 h-16 text-cyan-400 mb-4"></i><h3 class="font-semibold text-lg">CSS3</h3></div>
+                    <div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="200"><i data-lucide="braces" class="w-16 h-16 text-cyan-400 mb-4"></i><h3 class="font-semibold text-lg">JavaScript</h3></div>
+                    <div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="250"><i data-lucide="atom" class="w-16 h-16 text-cyan-400 mb-4"></i><h3 class="font-semibold text-lg">React</h3></div>
+                    <div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="300"><i data-lucide="tailwind" class="w-16 h-16 text-cyan-400 mb-4"></i><h3 class="font-semibold text-lg">Tailwind CSS</h3></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-16 md:py-20 bg-slate-800/50">
+            <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">My Projects</h2>
+                <div id="project-filters" class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="filter-btn btn-gradient text-white font-semibold px-5 py-2 rounded-lg" data-filter="all">All</button>
+                    <button class="filter-btn bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="ai-ml">AI/ML</button>
+                    <button class="filter-btn bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="mern">MERN Stack</button>
+                    <button class="filter-btn bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="java">Java</button>
+                </div>
+                <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
+                        <img src="https://placehold.co/600x400/111827/7DD3FC?text=MERN+Project" alt="Project 1" class="w-full h-full object-cover">
+                        <div class="project-details"><h3 class="text-xl font-bold mb-2">E-commerce Platform</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Node.js</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">MongoDB</span></div><p class="text-gray-400 mb-4 text-sm">A full-featured e-commerce site with product listings and a checkout system.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">Live Demo <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i></a></div>
+                    </div>
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="200" data-tilt data-category="ai-ml">
+                        <img src="https://placehold.co/600x400/111827/F472B6?text=AI/ML+Project" alt="Project 2" class="w-full h-full object-cover">
+                        <div class="project-details"><h3 class="text-xl font-bold mb-2">Sentiment Analysis Tool</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Python</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span></div><p class="text-gray-400 mb-4 text-sm">A web app that analyzes the sentiment of user-provided text.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">View on GitHub <i data-lucide="github" class="w-4 h-4 ml-2"></i></a></div>
+                    </div>
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="300" data-tilt data-category="java">
+                        <img src="https://placehold.co/600x400/111827/FBBF24?text=Java+Project" alt="Project 3" class="w-full h-full object-cover">
+                        <div class="project-details"><h3 class="text-xl font-bold mb-2">Inventory Management System</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Java</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Spring Boot</span></div><p class="text-gray-400 mb-4 text-sm">A robust backend system for managing stock and inventory.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">View on GitHub <i data-lucide="github" class="w-4 h-4 ml-2"></i></a></div>
+                    </div>
+                     <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
+                        <img src="https://placehold.co/600x400/111827/818CF8?text=MERN+Project" alt="Project 4" class="w-full h-full object-cover">
+                        <div class="project-details"><h3 class="text-xl font-bold mb-2">Social Media App</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Express.js</span></div><p class="text-gray-400 mb-4 text-sm">A social platform for users to connect and share posts.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">Live Demo <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 md:py-20">
+            <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Get In Touch</h2>
+                <p class="text-center text-gray-400 mb-12">Have a question or want to work together? Send me a message!</p>
+                <div class="max-w-lg mx-auto p-6 sm:p-8 glass-effect rounded-lg">
+                    <form action="#" method="POST">
+                        <div class="mb-4"><label for="name" class="block mb-2 font-medium">Name</label><input type="text" id="name" name="name" class="w-full px-4 py-2 bg-slate-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"></div>
+                        <div class="mb-4"><label for="email" class="block mb-2 font-medium">Email</label><input type="email" id="email" name="email" class="w-full px-4 py-2 bg-slate-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"></div>
+                        <div class="mb-4"><label for="message" class="block mb-2 font-medium">Message</label><textarea id="message" name="message" rows="4" class="w-full px-4 py-2 bg-slate-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"></textarea></div>
+                        <button type="submit" class="w-full btn-gradient text-white font-bold py-3 px-6 rounded-lg">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-slate-900 py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center text-gray-400">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="github" class="w-6 h-6"></i></a>
+                <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                <a href="#" class="hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+            </div>
+            <p>&copy; 2025 Arpit Shukla. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+
+    <script>
+        lucide.createIcons();
+        AOS.init({ duration: 1000, once: true });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        // Typed.js
+        new Typed('#typed-text', {
+            strings: ['[Your Profession]', 'a Problem Solver', 'a Creative Thinker'],
+            typeSpeed: 50, backSpeed: 25, loop: true
+        });
+
+        // Particles.js
+        particlesJS('particles-js', {"particles":{"number":{"value":35,"density":{"enable":true,"value_area":800}},"color":{"value":"#06b6d4"},"shape":{"type":"circle"},"opacity":{"value":0.5,"random":false},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#06b6d4","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true});
+        
+        // Vanilla-Tilt.js for Project Cards
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 15, speed: 400, glare: true, "max-glare": 0.5 });
+
+        // Project Filtering Logic
+        const filterButtons = document.querySelectorAll('#project-filters .filter-btn');
+        const projectCards = document.querySelectorAll('#project-grid .project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('btn-gradient');
+                    btn.classList.add('bg-slate-700', 'hover:bg-slate-600');
+                });
+                button.classList.add('btn-gradient');
+                button.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+
+                const filter = button.dataset.filter;
+
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // NEW TIMELINE SCROLL LOGIC
+    // NEW TIMELINE SCROLL LOGIC (Corrected & Smoother)
+// NEW & CORRECTED TIMELINE SCROLL LOGIC
+        window.addEventListener('scroll', function() {
+            const timelineContainer = document.getElementById('timeline-container');
+            if (!timelineContainer) return;
+
+            const timelineProgress = document.getElementById('timeline-progress');
+            const dots = document.querySelectorAll('.timeline-dot');
+            const sections = [document.getElementById('education-section'), document.getElementById('profiles-section')];
+
+            // Get the position of the container relative to the viewport
+            const containerRect = timelineContainer.getBoundingClientRect();
+            
+            // We want the animation to happen as the container scrolls through the middle of the screen.
+            // Let's define the "active zone" from 20% to 80% of the viewport height.
+            const startPoint = window.innerHeight * 0.8; // When the top of the element hits 80% down the screen
+            const endPoint = window.innerHeight * 0.2;   // When the bottom of the element hits 20% up the screen
+
+            // Calculate the total distance the element's top will travel within our active zone
+            const totalScrollDistance = startPoint - endPoint;
+
+            // Calculate how far the element's top has traveled from the start point
+            const scrolledDistance = startPoint - containerRect.top;
+
+            // Calculate the progress percentage within that distance
+            const progressPercentage = (scrolledDistance / totalScrollDistance) * 100;
+
+            // Ensure the percentage is always between 0 and 100
+            const percentage = Math.max(0, Math.min(100, progressPercentage));
+
+            timelineProgress.style.height = percentage + '%';
+            
+            // Activate dots when their section is in view
+            sections.forEach((section, index) => {
+                const sectionRect = section.getBoundingClientRect();
+                // Activate the dot when the section's top is above the middle of the screen
+                if (sectionRect.top < window.innerHeight * 0.5) {
+                    dots[index].classList.add('active');
+                } else {
+                    dots[index].classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
