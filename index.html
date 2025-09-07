@@ -14,8 +14,8 @@
             background-color: #0a192f;
         }
         #timeline-progress {
-    transition: height 0.1s linear;
-}
+            transition: height 0.1s linear;
+        }
         .glass-effect {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -55,12 +55,10 @@
         }
         @keyframes wheel { to { opacity: 0; top: 30px; } }
         
-        /* New Timeline Styles */
         .timeline-dot.active {
             background-color: #06b6d4;
             border-color: #0a192f;
         }
-        
     </style>
 </head>
 <body class="text-gray-200">
@@ -112,20 +110,13 @@
             <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">About Me</h2>
                 <div class="w-full max-w-3xl mx-auto">
-                    <p class="text-gray-300 leading-relaxed text-center md:text-left"> 
-                        Welcome to my portfolio!
-I'm Arpit Shukla, a passionate Computer Science student at Ajay Kumar Garg Engineering College with a strong background in Computer Applications from Lucknow University. I specialize in Full Stack Development (MERN) and have hands-on experience through internships and personal projects, including building e-commerce platforms and blockchain-based dApps.
-
-I enjoy solving complex problems and continuously improving my skills in areas like Java, JavaScript, React, Node.js, MongoDB, and blockchain development. With a solution-driven mindset and a constant curiosity for emerging technologies, I aim to build impactful projects that combine innovation with real-world usability.
-
-In this ever-evolving tech world, I strive to stay ahead by learning, experimenting, and creating solutions that make a difference.
+                    <p class="text-gray-300 leading-relaxed text-center md:text-left">
+                        Welcome to my portfolio! I'm Arpit Shukla, a passionate Computer Science student at Ajay Kumar Garg Engineering College with a strong background in Computer Applications from Lucknow University. I specialize in Full Stack Development (MERN) and have hands-on experience through internships and personal projects, including building e-commerce platforms and blockchain-based dApps. I enjoy solving complex problems and continuously improving my skills in areas like Java, JavaScript, React, Node.js, MongoDB, and blockchain development. With a solution-driven mindset and a constant curiosity for emerging technologies, I aim to build impactful projects that combine innovation with real-world usability. In this ever-evolving tech world, I strive to stay ahead by learning, experimenting, and creating solutions that make a difference.
                     </p>
-                    
                     <div id="timeline-container" class="relative mt-12 pl-8">
                         <div class="absolute top-0 left-0 w-1 h-full bg-slate-700 rounded-full">
                              <div id="timeline-progress" class="w-full bg-cyan-400 rounded-full" style="height: 0%;"></div>
                         </div>
-
                         <div id="education-section" class="relative mb-16">
                             <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-700 rounded-full border-4 border-slate-900 transition-colors duration-300"></div>
                             <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Education</h3>
@@ -142,7 +133,6 @@ In this ever-evolving tech world, I strive to stay ahead by learning, experiment
                                 </div>
                             </div>
                         </div>
-
                         <div id="profiles-section" class="relative">
                             <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-700 rounded-full border-4 border-slate-900 transition-colors duration-300"></div>
                             <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Profiles & Socials</h3>
@@ -186,21 +176,78 @@ In this ever-evolving tech world, I strive to stay ahead by learning, experiment
                     <button class="filter-btn bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="java">Java</button>
                 </div>
                 <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
                     <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
-                        <img src="https://placehold.co/600x400/111827/7DD3FC?text=MERN+Project" alt="Project 1" class="w-full h-full object-cover">
-                        <div class="project-details"><h3 class="text-xl font-bold mb-2">E-commerce Platform</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Node.js</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">MongoDB</span></div><p class="text-gray-400 mb-4 text-sm">A full-featured e-commerce site with product listings and a checkout system.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">Live Demo <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i></a></div>
+                        <img src="images/image.png" alt="Project 1" class="w-full h-full object-cover">
+                        <div class="project-details">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-xl font-bold">File Sharing App</h3>
+                                <div class="flex items-center space-x-3">
+                                    <a href="https://github.com/arpit-shukla-13/secure-file-sharing" target="_blank" title="GitHub Repository" class="hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                                    <a href="https://findfiles.netlify.app/" target="_blank" title="Live Demo" class="hover:text-cyan-400 transition-colors"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+                                </div>
+                            </div>
+                            <p class="text-gray-400 my-3 text-sm">A full-featured and secure file sharing system.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Node.js</span>
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">MongoDB</span>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="200" data-tilt data-category="ai-ml">
                         <img src="https://placehold.co/600x400/111827/F472B6?text=AI/ML+Project" alt="Project 2" class="w-full h-full object-cover">
-                        <div class="project-details"><h3 class="text-xl font-bold mb-2">Sentiment Analysis Tool</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Python</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span></div><p class="text-gray-400 mb-4 text-sm">A web app that analyzes the sentiment of user-provided text.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">View on GitHub <i data-lucide="github" class="w-4 h-4 ml-2"></i></a></div>
+                        <div class="project-details">
+                             <div class="flex justify-between items-center">
+                                <h3 class="text-xl font-bold">Sentiment Analysis Tool</h3>
+                                <div class="flex items-center space-x-3">
+                                    <a href="#" target="_blank" title="GitHub Repository" class="hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                                    <a href="#" target="_blank" title="Live Demo" class="hover:text-cyan-400 transition-colors"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+                                </div>
+                            </div>
+                            <p class="text-gray-400 my-3 text-sm">A web app that analyzes the sentiment of user-provided text.</p>
+                             <div class="flex flex-wrap gap-2">
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="300" data-tilt data-category="java">
                         <img src="https://placehold.co/600x400/111827/FBBF24?text=Java+Project" alt="Project 3" class="w-full h-full object-cover">
-                        <div class="project-details"><h3 class="text-xl font-bold mb-2">Inventory Management System</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Java</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Spring Boot</span></div><p class="text-gray-400 mb-4 text-sm">A robust backend system for managing stock and inventory.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">View on GitHub <i data-lucide="github" class="w-4 h-4 ml-2"></i></a></div>
+                        <div class="project-details">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-xl font-bold">Inventory Management</h3>
+                                <div class="flex items-center space-x-3">
+                                    <a href="#" target="_blank" title="GitHub Repository" class="hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                                    <a href="#" target="_blank" title="Live Demo" class="hover:text-cyan-400 transition-colors"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+                                </div>
+                            </div>
+                            <p class="text-gray-400 my-3 text-sm">A robust backend system for managing stock and inventory.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Java</span>
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Spring Boot</span>
+                            </div>
+                        </div>
                     </div>
-                     <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
+
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
                         <img src="https://placehold.co/600x400/111827/818CF8?text=MERN+Project" alt="Project 4" class="w-full h-full object-cover">
-                        <div class="project-details"><h3 class="text-xl font-bold mb-2">Social Media App</h3><div class="flex flex-wrap gap-2 mb-4"><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span><span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Express.js</span></div><p class="text-gray-400 mb-4 text-sm">A social platform for users to connect and share posts.</p><a href="#" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold">Live Demo <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i></a></div>
+                        <div class="project-details">
+                           <div class="flex justify-between items-center">
+                                <h3 class="text-xl font-bold">Social Media App</h3>
+                                <div class="flex items-center space-x-3">
+                                    <a href="#" target="_blank" title="GitHub Repository" class="hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                                    <a href="#" target="_blank" title="Live Demo" class="hover:text-cyan-400 transition-colors"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+                                </div>
+                            </div>
+                            <p class="text-gray-400 my-3 text-sm">A social platform for users to connect and share posts.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
+                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Express.js</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -254,7 +301,7 @@ In this ever-evolving tech world, I strive to stay ahead by learning, experiment
         });
 
         // Particles.js
-        particlesJS('particles-js', {"particles":{"number":{"value":35,"density":{"enable":true,"value_area":800}},"color":{"value":"#06b6d4"},"shape":{"type":"circle"},"opacity":{"value":0.5,"random":false},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#06b6d4","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true});
+        particlesJS('particles-js', {"particles":{"number":{"value":115,"density":{"enable":true,"value_area":800}},"color":{"value":"#06b6d4"},"shape":{"type":"circle"},"opacity":{"value":0.5,"random":false},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#06b6d4","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true});
         
         // Vanilla-Tilt.js for Project Cards
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 15, speed: 400, glare: true, "max-glare": 0.5 });
@@ -284,9 +331,7 @@ In this ever-evolving tech world, I strive to stay ahead by learning, experiment
             });
         });
 
-        // NEW TIMELINE SCROLL LOGIC
-    // NEW TIMELINE SCROLL LOGIC (Corrected & Smoother)
-// NEW & CORRECTED TIMELINE SCROLL LOGIC
+        // NEW & CORRECTED TIMELINE SCROLL LOGIC
         window.addEventListener('scroll', function() {
             const timelineContainer = document.getElementById('timeline-container');
             if (!timelineContainer) return;
@@ -295,32 +340,20 @@ In this ever-evolving tech world, I strive to stay ahead by learning, experiment
             const dots = document.querySelectorAll('.timeline-dot');
             const sections = [document.getElementById('education-section'), document.getElementById('profiles-section')];
 
-            // Get the position of the container relative to the viewport
             const containerRect = timelineContainer.getBoundingClientRect();
             
-            // We want the animation to happen as the container scrolls through the middle of the screen.
-            // Let's define the "active zone" from 20% to 80% of the viewport height.
-            const startPoint = window.innerHeight * 0.8; // When the top of the element hits 80% down the screen
-            const endPoint = window.innerHeight * 0.2;   // When the bottom of the element hits 20% up the screen
+            const startPoint = window.innerHeight * 0.8;
+            const endPoint = window.innerHeight * 0.2;
 
-            // Calculate the total distance the element's top will travel within our active zone
             const totalScrollDistance = startPoint - endPoint;
-
-            // Calculate how far the element's top has traveled from the start point
             const scrolledDistance = startPoint - containerRect.top;
-
-            // Calculate the progress percentage within that distance
             const progressPercentage = (scrolledDistance / totalScrollDistance) * 100;
-
-            // Ensure the percentage is always between 0 and 100
             const percentage = Math.max(0, Math.min(100, progressPercentage));
 
             timelineProgress.style.height = percentage + '%';
             
-            // Activate dots when their section is in view
             sections.forEach((section, index) => {
                 const sectionRect = section.getBoundingClientRect();
-                // Activate the dot when the section's top is above the middle of the screen
                 if (sectionRect.top < window.innerHeight * 0.5) {
                     dots[index].classList.add('active');
                 } else {
