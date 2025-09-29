@@ -8,21 +8,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        // Set up Tailwind's dark mode to work with a class
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a192f;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         #timeline-progress {
             transition: height 0.1s linear;
         }
+
+        /* --- Light Mode Styles --- */
         .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(209, 213, 219, 1); /* border-gray-300 */
+        }
+        .timeline-dot.active {
+            background-color: #06b6d4; /* cyan-500 */
+            border-color: #f3f4f6; /* gray-100 */
+        }
+        .project-card .project-details {
+            background: linear-gradient(to top, rgba(249, 250, 251, 1) 50%, rgba(249, 250, 251, 0)); /* bg-gray-50 */
+        }
+
+        /* --- Dark Mode Overrides --- */
+        .dark .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        .dark .timeline-dot.active {
+            border-color: #0a192f;
+        }
+        .dark .project-card .project-details {
+            background: linear-gradient(to top, rgba(10, 25, 47, 1) 50%, rgba(10, 25, 47, 0));
+        }
+
+        /* Particle background */
+        #particles-js { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            top: 0; 
+            left: 0; 
+            z-index: 0; 
+        }
+
         .content-container { position: relative; z-index: 1; }
         .btn-gradient {
             background-image: linear-gradient(to right, #06b6d4, #22d3ee, #06b6d4);
@@ -30,12 +67,12 @@
             transition: 0.5s;
         }
         .btn-gradient:hover { background-position: right center; }
+        
         .project-card {
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
         .project-card .project-details {
             position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;
-            background: linear-gradient(to top, rgba(10, 25, 47, 1) 50%, rgba(10, 25, 47, 0));
             transform: translateY(100%); opacity: 0;
             transition: transform 0.4s ease-out, opacity 0.4s ease-out;
         }
@@ -46,6 +83,8 @@
             transform: scale(0.9); opacity: 0; width: 0;
             padding: 0; margin: 0; overflow: hidden;
         }
+
+        /* Scroll down indicator */
         .scroll-down { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 2; }
         .scroll-down .mouse { width: 30px; height: 50px; border: 2px solid #06b6d4; border-radius: 60px; position: relative; }
         .scroll-down .mouse::before {
@@ -55,29 +94,34 @@
         }
         @keyframes wheel { to { opacity: 0; top: 30px; } }
         
-        .timeline-dot.active {
-            background-color: #06b6d4;
-            border-color: #0a192f;
-        }
+        /* Theme toggle icons logic */
+        :root:not(.dark) .sun-icon { display: none; }
+        :root:not(.dark) .moon-icon { display: block; }
+        .dark .sun-icon { display: block; }
+        .dark .moon-icon { display: none; }
     </style>
 </head>
-<body class="text-gray-200">
+<body class="bg-gray-50 text-slate-800 dark:bg-[#0a192f] dark:text-gray-200">
 
-    <header class="bg-slate-900/90 fixed top-0 left-0 right-0 z-50">
+    <header class="bg-white/80 dark:bg-slate-900/90 fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-cyan-400 tracking-wider">Portfolio</a>
+            <a href="#" class="text-2xl font-bold text-cyan-500 dark:text-cyan-400 tracking-wider">Portfolio</a>
             <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#about" class="hover:text-cyan-400 transition duration-300">About</a>
-                <a href="#skills" class="hover:text-cyan-400 transition duration-300">Skills</a>
-                <a href="#projects" class="hover:text-cyan-400 transition duration-300">Projects</a>
+                <a href="#about" class="text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 transition duration-300">About</a>
+                <a href="#skills" class="text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 transition duration-300">Skills</a>
+                <a href="#projects" class="text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 transition duration-300">Projects</a>
                 <a href="#contact" class="btn-gradient text-white font-semibold px-5 py-2 rounded-lg">Contact Me</a>
+                <button id="theme-toggle" class="p-2 rounded-lg text-slate-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+                    <i data-lucide="moon" class="moon-icon"></i>
+                    <i data-lucide="sun" class="sun-icon"></i>
+                </button>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden"><i data-lucide="menu" class="text-white"></i></button>
+            <button id="mobile-menu-button" class="md:hidden text-slate-800 dark:text-white"><i data-lucide="menu"></i></button>
         </div>
         <div id="mobile-menu" class="hidden md:hidden px-4 sm:px-6 pb-4">
-            <a href="#about" class="block py-2 hover:text-cyan-400">About</a>
-            <a href="#skills" class="block py-2 hover:text-cyan-400">Skills</a>
-            <a href="#projects" class="block py-2 hover:text-cyan-400">Projects</a>
+            <a href="#about" class="block py-2 text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">About</a>
+            <a href="#skills" class="block py-2 text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">Skills</a>
+            <a href="#projects" class="block py-2 text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">Projects</a>
             <a href="#contact" class="block mt-2 btn-gradient text-white font-semibold px-4 py-2 rounded-lg text-center">Contact Me</a>
         </div>
     </header>
@@ -88,62 +132,62 @@
             <div class="container mx-auto px-4 sm:px-6 content-container flex flex-col md:flex-row items-center text-center md:text-left">
                 <div class="md:w-1/2 order-2 md:order-1 mt-10 md:mt-0" data-aos="fade-right">
                     <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-                        <span class="block text-gray-200">Hello, I'm</span>
-                        <span class="block text-cyan-400 mt-2">Arpit Shukla</span>
+                        <span class="block text-slate-800 dark:text-gray-200">Hello, I'm</span>
+                        <span class="block text-cyan-500 dark:text-cyan-400 mt-2">Arpit Shukla</span>
                     </h1>
-                    <p class="mt-4 text-lg md:text-xl text-gray-400">
-                        A passionate <span id="typed-text" class="font-semibold text-cyan-300"></span> dedicated to building amazing digital experiences.
+                    <p class="mt-4 text-lg md:text-xl text-slate-600 dark:text-gray-400">
+                        A passionate <span id="typed-text" class="font-semibold text-cyan-600 dark:text-cyan-300"></span> dedicated to building amazing digital experiences.
                     </p>
                     <div class="mt-8 flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4">
                         <a href="asset/Arpit Shukla's Resume.pdf" download="Arpit-Shukla-CV.pdf" class="w-full sm:w-auto btn-gradient text-white font-bold py-3 px-6 rounded-lg text-center">Download CV</a>
-                        <a href="#projects" class="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 text-center">See My Work</a>
+                        <a href="#projects" class="w-full sm:w-auto bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 text-center">See My Work</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center items-center order-1 md:order-2" data-aos="fade-left" data-aos-delay="200">
-                    <img src="images/Gemini_Generated_Image_nzdji2nzdji2nzdj.png" alt="Profile Photo" class="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full object-cover border-4 border-cyan-400/50 drop-shadow-[0_20px_20px_rgba(6,182,212,0.25)]">
+                    <img src="https://placehold.co/320x320/06b6d4/FFFFFF?text=AS" alt="Profile Photo" class="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full object-cover border-4 border-cyan-500/50 dark:border-cyan-400/50 drop-shadow-[0_20px_20px_rgba(6,182,212,0.25)]">
                 </div>
             </div>
             <div class="scroll-down hidden md:block"><div class="mouse"></div></div>
         </section>
 
-        <section id="about" class="py-16 md:py-20 bg-slate-800/50">
+        <section id="about" class="py-16 md:py-20 bg-gray-100 dark:bg-slate-800/50">
             <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">About Me</h2>
                 <div class="w-full max-w-3xl mx-auto">
-                    <p class="text-gray-300 leading-relaxed text-center md:text-left">
+                    <p class="text-slate-600 dark:text-gray-300 leading-relaxed text-center md:text-left">
                         Welcome to my portfolio! I'm Arpit Shukla, a passionate Computer Science student at Ajay Kumar Garg Engineering College with a strong background in Computer Applications from Lucknow University. I specialize in Full Stack Development (MERN) and have hands-on experience through internships and personal projects, including building e-commerce platforms and blockchain-based dApps. I enjoy solving complex problems and continuously improving my skills in areas like Java, JavaScript, React, Node.js, MongoDB, and blockchain development. With a solution-driven mindset and a constant curiosity for emerging technologies, I aim to build impactful projects that combine innovation with real-world usability. In this ever-evolving tech world, I strive to stay ahead by learning, experimenting, and creating solutions that make a difference.
                     </p>
                     <div id="timeline-container" class="relative mt-12 pl-8">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-slate-700 rounded-full">
-                             <div id="timeline-progress" class="w-full bg-cyan-400 rounded-full" style="height: 0%;"></div>
+                        <div class="absolute top-0 left-0 w-1 h-full bg-slate-300 dark:bg-slate-700 rounded-full">
+                             <div id="timeline-progress" class="w-full bg-cyan-500 dark:bg-cyan-400 rounded-full" style="height: 0%;"></div>
                         </div>
                         <div id="education-section" class="relative mb-16">
-                            <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-700 rounded-full border-4 border-slate-900 transition-colors duration-300"></div>
-                            <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Education</h3>
+                            <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-300 dark:bg-slate-700 rounded-full border-4 border-gray-100 dark:border-slate-900 transition-colors duration-300"></div>
+                            <h3 class="text-2xl font-semibold text-cyan-500 dark:text-cyan-400 mb-4">Education</h3>
                             <div class="space-y-4">
-                                <div class="p-4 bg-slate-800/50 rounded-lg">
-                                    <p class="font-bold text-lg text-gray-200">Master's of Computer Applications (MCA)</p>
-                                    <p class="text-gray-400">Ajay Kumar Garg Engineering College(AKTU), Ghaziabad</p>
-                                    <p class="text-sm text-gray-500">2024 - 2026</p>
+                                <div class="p-4 bg-white dark:bg-slate-800/50 rounded-lg shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 dark:text-gray-200">Master's of Computer Applications (MCA)</p>
+                                    <p class="text-slate-600 dark:text-gray-400">Ajay Kumar Garg Engineering College(AKTU), Ghaziabad</p>
+                                    <p class="text-sm text-slate-500 dark:text-gray-500">2024 - 2026</p>
                                 </div>
-                                 <div class="p-4 bg-slate-800/50 rounded-lg">
-                                    <p class="font-bold text-lg text-gray-200">Bachelor's of Computer Applications (BCA)</p>
-                                    <p class="text-gray-400">Lucknow University, Lucknow</p>
-                                    <p class="text-sm text-gray-500">2021 - 2024`</p>
+                                 <div class="p-4 bg-white dark:bg-slate-800/50 rounded-lg shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 dark:text-gray-200">Bachelor's of Computer Applications (BCA)</p>
+                                    <p class="text-slate-600 dark:text-gray-400">Lucknow University, Lucknow</p>
+                                    <p class="text-sm text-slate-500 dark:text-gray-500">2021 - 2024`</p>
                                 </div>
                             </div>
                         </div>
                         <div id="profiles-section" class="relative">
-                            <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-700 rounded-full border-4 border-slate-900 transition-colors duration-300"></div>
-                            <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Profiles & Socials</h3>
+                            <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-300 dark:bg-slate-700 rounded-full border-4 border-gray-100 dark:border-slate-900 transition-colors duration-300"></div>
+                            <h3 class="text-2xl font-semibold text-cyan-500 dark:text-cyan-400 mb-4">Profiles & Socials</h3>
                             <div class="flex flex-wrap gap-4">
-                                <a href="https://github.com/arpit-shukla-13" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:text-cyan-400 text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
+                                <a href="https://github.com/arpit-shukla-13" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700/80 hover:text-cyan-500 dark:hover:text-cyan-400 text-slate-700 dark:text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
                                     <i data-lucide="github" class="w-5 h-5"></i> GitHub
                                 </a>
-                                <a href="https://www.linkedin.com/in/arpit-shukla-856789207/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:text-cyan-400 text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
+                                <a href="https://www.linkedin.com/in/arpit-shukla-856789207/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700/80 hover:text-cyan-500 dark:hover:text-cyan-400 text-slate-700 dark:text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
                                     <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
                                 </a>
-                                <a href="https://leetcode.com/u/arpitshukla_13/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:text-cyan-400 text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
+                                <a href="https://leetcode.com/u/arpitshukla_13/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700/80 hover:text-cyan-500 dark:hover:text-cyan-400 text-slate-700 dark:text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
                                     <i data-lucide="code-2" class="w-5 h-5"></i> LeetCode
                                 </a>
                             </div>
@@ -157,213 +201,185 @@
             <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">My Skills</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8">
-                    
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="100">
-    <i data-lucide="file-code-2" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">C / C++</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="150">
-    <i data-lucide="atom" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">React.js</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="200">
-    <i data-lucide="route" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">Express.js</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="250">
-    <i data-lucide="server" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">Node.js</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="300">
-    <i data-lucide="database" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">SQL</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="350">
-    <i data-lucide="coffee" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">Java</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="400">
-    <i data-lucide="braces" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">JavaScript</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="450">
-    <i data-lucide="file-text" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">JSP</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="500">
-    <i data-lucide="leaf" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">MongoDB</h3>
-</div>
-
-<div class="flex flex-col items-center p-6 bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="550">
-    <i data-lucide="cog" class="w-16 h-16 text-cyan-400 mb-4"></i>
-    <h3 class="font-semibold text-lg">Servlet</h3>
-</div>
-
+                    <!-- Skills Items -->
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="100">
+                        <i data-lucide="file-code-2" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">C / C++</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="150">
+                        <i data-lucide="atom" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">React.js</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="200">
+                        <i data-lucide="route" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Express.js</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="250">
+                        <i data-lucide="server" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Node.js</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="300">
+                        <i data-lucide="database" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">SQL</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="350">
+                        <i data-lucide="coffee" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Java</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="400">
+                        <i data-lucide="braces" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">JavaScript</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="450">
+                        <i data-lucide="file-text" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">JSP</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="500">
+                        <i data-lucide="leaf" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">MongoDB</h3>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 rounded-lg transition duration-300 transform hover:-translate-y-2 hover:shadow-cyan-500/50 shadow-lg border-2 border-transparent hover:border-cyan-400" data-aos="fade-up" data-aos-delay="550">
+                        <i data-lucide="cog" class="w-16 h-16 text-cyan-500 dark:text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Servlet</h3>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="py-16 md:py-20 bg-slate-800/50">
+        <section id="projects" class="py-16 md:py-20 bg-gray-100 dark:bg-slate-800/50">
             <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">My Projects</h2>
                 <div id="project-filters" class="flex flex-wrap justify-center gap-4 mb-12">
                     <button class="filter-btn btn-gradient text-white font-semibold px-5 py-2 rounded-lg" data-filter="all">All</button>
-                    <button class="filter-btn bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="mern">MERN Stack</button>
-                    <!-- <button class="filter-btn bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="ai-ml">AI/ML</button>
-                    <button class="filter-btn bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="java">Java</button> -->
+                    <button class="filter-btn bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="mern">MERN Stack</button>
                 </div>
                 <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
-                        <img src="images\Screenshot 2025-09-21 214945.png" alt="Project 4" class="w-full h-full object-cover">
-                        <div class="project-details">
-                           <div class="flex justify-between items-center">
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group bg-white dark:bg-slate-900" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
+                        <img src="https://placehold.co/600x400/1e293b/94a3b8?text=Chit-Chat+App" alt="Chit-Chat Application" class="w-full h-full object-cover">
+                        <div class="project-details text-slate-800 dark:text-white">
+                            <div class="flex justify-between items-center">
                                 <h3 class="text-xl font-bold">Chit-Chat Application</h3>
                                 <div class="flex items-center space-x-3">
-                                    <a href="https://github.com/arpit-shukla-13/Chit-Chat" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="github" class="w-4 h-4"></i>
-                                        <span>GitHub</span>
+                                    <a href="https://github.com/arpit-shukla-13/Chit-Chat" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                        <i data-lucide="github" class="w-4 h-4"></i><span>GitHub</span>
                                     </a>
-                                    <a href="https://chitchatttt.netlify.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        <span>Live Demo</span>
+                                    <a href="https://chitchatttt.netlify.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i><span>Live Demo</span>
                                     </a>
                                 </div>
                             </div>
-                            <p class="text-gray-400 my-3 text-sm">A Chating web application where multiple user can connect one to one. </p>
+                            <p class="text-slate-600 dark:text-gray-400 my-3 text-sm">A chating web application where multiple user can connect one to one. </p>
                             <div class="flex flex-wrap gap-2">
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Express.js</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Express.js</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
-                        <img src="images/image.png" alt="Project 1" class="w-full h-full object-cover">
-                        <div class="project-details">
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group bg-white dark:bg-slate-900" data-aos="fade-up" data-aos-delay="100" data-tilt data-category="mern">
+                        <img src="https://placehold.co/600x400/1e293b/94a3b8?text=File+Sharing+App" alt="Project 1" class="w-full h-full object-cover">
+                         <div class="project-details text-slate-800 dark:text-white">
                             <div class="flex justify-between items-center">
                                 <h3 class="text-xl font-bold">File Sharing App</h3>
                                 <div class="flex items-center space-x-3">
-                                    <a href="https://github.com/arpit-shukla-13/secure-file-sharing" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="github" class="w-4 h-4"></i>
-                                        <span>GitHub</span>
+                                    <a href="https://github.com/arpit-shukla-13/secure-file-sharing" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                        <i data-lucide="github" class="w-4 h-4"></i><span>GitHub</span>
                                     </a>
-                                    <a href="https://findfiles.netlify.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        <span>Live Demo</span>
+                                    <a href="https://findfiles.netlify.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i><span>Live Demo</span>
                                     </a>
                                 </div>
                             </div>
-                            <p class="text-gray-400 my-3 text-sm">A full-featured and secure file sharing system.</p>
+                            <p class="text-slate-600 dark:text-gray-400 my-3 text-sm">A full-featured and secure file sharing system.</p>
                             <div class="flex flex-wrap gap-2">
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Node.js</span>
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">MongoDB</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Node.js</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">MongoDB</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="200" data-tilt data-category="mern">
-                        <img src="\images\Screenshot 2025-09-13 231833.png" alt="Project 2" class="w-full h-full object-cover">
-                        <div class="project-details">
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group bg-white dark:bg-slate-900" data-aos="fade-up" data-aos-delay="200" data-tilt data-category="mern">
+                        <img src="https://placehold.co/600x400/1e293b/94a3b8?text=Site+Map+Generator" alt="Project 2" class="w-full h-full object-cover">
+                        <div class="project-details text-slate-800 dark:text-white">
                              <div class="flex justify-between items-center">
                                 <h3 class="text-xl font-bold">Site Map Generator</h3>
                                 <div class="flex items-center space-x-3">
-                                     <a href="https://github.com/arpit-shukla-13/SiteMapGenerator" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="github" class="w-4 h-4"></i>
-                                        <span>GitHub</span>
-                                    </a>
-                                    <a href="https://site-map-generator.vercel.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        <span>Live Demo</span>
+                                     <a href="https://github.com/arpit-shukla-13/SiteMapGenerator" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                         <i data-lucide="github" class="w-4 h-4"></i><span>GitHub</span>
+                                     </a>
+                                    <a href="https://site-map-generator.vercel.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i><span>Live Demo</span>
                                     </a>
                                 </div>
                             </div>
-                            <p class="text-gray-400 my-3 text-sm">A web app that generates a visual site map from a URL.</p>
+                            <p class="text-slate-600 dark:text-gray-400 my-3 text-sm">A web app that generates a visual site map from a URL.</p>
                              <div class="flex flex-wrap gap-2">
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">JavaScript</span>
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Next.js</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">JavaScript</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Next.js</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="300" data-tilt data-category="mern">
-                        <img src="\images\Screenshot 2025-09-14 191049.png" alt="Project 3" class="w-full h-full object-cover">
-                        <div class="project-details">
+                    <div class="project-card relative rounded-lg overflow-hidden shadow-lg group bg-white dark:bg-slate-900" data-aos="fade-up" data-aos-delay="300" data-tilt data-category="mern">
+                        <img src="https://placehold.co/600x400/1e293b/94a3b8?text=Find+Your+Space" alt="Project 3" class="w-full h-full object-cover">
+                         <div class="project-details text-slate-800 dark:text-white">
                             <div class="flex justify-between items-center">
                                 <h3 class="text-xl font-bold">Find Your Space</h3>
                                 <div class="flex items-center space-x-3">
-                                    <a href="https://github.com/arpit-shukla-13/Find-Your-space" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="github" class="w-4 h-4"></i>
-                                        <span>GitHub</span>
+                                    <a href="https://github.com/arpit-shukla-13/Find-Your-space" target="_blank" title="GitHub Repository" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                        <i data-lucide="github" class="w-4 h-4"></i><span>GitHub</span>
                                     </a>
-                                    <a href="https://find-your-space-ten.vercel.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-slate-700/50 hover:bg-slate-600/50 rounded-md border border-slate-600 hover:text-cyan-400 transition-all text-sm">
-                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        <span>Live Demo</span>
+                                    <a href="https://find-your-space-ten.vercel.app/" target="_blank" title="Live Demo" class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-700/50 hover:bg-gray-200/50 dark:hover:bg-slate-600/50 rounded-md border border-gray-300 dark:border-slate-600 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all text-sm">
+                                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i><span>Live Demo</span>
                                     </a>
                                 </div>
                             </div>
-                            <p class="text-gray-400 my-3 text-sm">A web app that helps users find and book spaces.</p>
+                            <p class="text-slate-600 dark:text-gray-400 my-3 text-sm">A web app that helps users find and book spaces.</p>
                             <div class="flex flex-wrap gap-2">
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Javascript</span>
-                                <span class="bg-cyan-900/80 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Next.js</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Javascript</span>
+                                <span class="bg-cyan-100 dark:bg-cyan-900/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">Next.js</span>
                             </div>
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
         </section>
 
        <section id="contact" class="py-16 md:py-20">
-    <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Get In Touch</h2>
-        <p class="text-center text-gray-400 mb-12">Have a question or want to work together? Send me a message!</p>
-        <div class="max-w-lg mx-auto p-6 sm:p-8 glass-effect rounded-lg">
-            
-            <form action="https://api.web3forms.com/submit" method="POST">
-
-                <input type="hidden" name="access_key" value="34b5d6c1-2562-4a4d-8091-a42efb0804e9">
-
-                <div class="mb-4">
-                    <label for="name" class="block mb-2 font-medium">Name</label>
-                    <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-slate-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all" required>
+            <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Get In Touch</h2>
+                <p class="text-center text-slate-600 dark:text-gray-400 mb-12">Have a question or want to work together? Send me a message!</p>
+                <div class="max-w-lg mx-auto p-6 sm:p-8 glass-effect rounded-lg">
+                    <form action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="34b5d6c1-2562-4a4d-8091-a42efb0804e9">
+                        <div class="mb-4">
+                            <label for="name" class="block mb-2 font-medium">Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-gray-200/50 dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block mb-2 font-medium">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-gray-200/50 dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block mb-2 font-medium">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 bg-gray-200/50 dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all" required></textarea>
+                        </div>
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                        <button type="submit" class="w-full btn-gradient text-white font-bold py-3 px-6 rounded-lg">Send Message</button>
+                    </form>
                 </div>
-                <div class="mb-4">
-                    <label for="email" class="block mb-2 font-medium">Email</label>
-                    <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-slate-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all" required>
-                </div>
-                <div class="mb-4">
-                    <label for="message" class="block mb-2 font-medium">Message</label>
-                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 bg-slate-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all" required></textarea>
-                </div>
-                
-                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
-                <button type="submit" class="w-full btn-gradient text-white font-bold py-3 px-6 rounded-lg">Send Message</button>
-            </form>
             </div>
-    </div>
-</section>
+        </section>
     </main>
     
-    <footer class="bg-slate-900 py-8">
-        <div class="container mx-auto px-4 sm:px-6 text-center text-gray-400">
+    <footer class="bg-slate-100 dark:bg-slate-900 py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center text-slate-600 dark:text-gray-400">
             <div class="flex justify-center space-x-6 mb-4">
-                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="github" class="w-6 h-6"></i></a>
-                <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                <a href="#" class="hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-500 dark:hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="github" class="w-6 h-6"></i></a>
+                <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-500 dark:hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                <a href="#" class="hover:text-cyan-500 dark:hover:text-cyan-400 hover:scale-125 transition-transform"><i data-lucide="twitter" class="w-6 h-6"></i></a>
             </div>
             <p>&copy; 2025 Arpit Shukla. All Rights Reserved.</p>
         </div>
@@ -376,6 +392,50 @@
 
     <script>
         lucide.createIcons();
+
+        // --- THEME AND PARTICLES SETUP ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        const darkModeParticlesConfig = {"particles":{"number":{"value":115,"density":{"enable":true,"value_area":800}},"color":{"value":"#06b6d4"},"shape":{"type":"circle"},"opacity":{"value":0.5,"random":false},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#06b6d4","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true};
+        
+        const lightModeParticlesConfig = {"particles":{"number":{"value":115,"density":{"enable":true,"value_area":800}},"color":{"value":["#FF0000", "#0000FF"]},"shape":{"type":"circle"},"opacity":{"value":0.7,"random":true},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#0000FF","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true};
+
+        function setAndApplyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                if (window.pJSDom && window.pJSDom.length > 0) {
+                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                    window.pJSDom = [];
+                }
+                particlesJS('particles-js', darkModeParticlesConfig);
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                if (window.pJSDom && window.pJSDom.length > 0) {
+                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                    window.pJSDom = [];
+                }
+                particlesJS('particles-js', lightModeParticlesConfig);
+            }
+        }
+
+        // Set initial theme on page load
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('color-theme');
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            setAndApplyTheme('dark');
+        } else {
+            setAndApplyTheme('light');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            const isCurrentlyDark = document.documentElement.classList.contains('dark');
+            setAndApplyTheme(isCurrentlyDark ? 'light' : 'dark');
+        });
+
+        // --- OTHER SCRIPTS ---
         AOS.init({ duration: 1000, once: true });
 
         // Mobile menu toggle
@@ -385,12 +445,9 @@
 
         // Typed.js
         new Typed('#typed-text', {
-            strings: ['[Your Profession]', 'a Problem Solver', 'a Creative Thinker'],
+            strings: ['a Full Stack Developer', 'a Problem Solver', 'a Creative Thinker'],
             typeSpeed: 50, backSpeed: 25, loop: true
         });
-
-        // Particles.js
-        particlesJS('particles-js', {"particles":{"number":{"value":115,"density":{"enable":true,"value_area":800}},"color":{"value":"#06b6d4"},"shape":{"type":"circle"},"opacity":{"value":0.5,"random":false},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#06b6d4","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true});
         
         // Vanilla-Tilt.js for Project Cards
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 15, speed: 400, glare: true, "max-glare": 0.5 });
@@ -403,10 +460,10 @@
             button.addEventListener('click', () => {
                 filterButtons.forEach(btn => {
                     btn.classList.remove('btn-gradient');
-                    btn.classList.add('bg-slate-700', 'hover:bg-slate-600');
+                    btn.classList.add('bg-slate-200', 'dark:bg-slate-700', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
                 });
                 button.classList.add('btn-gradient');
-                button.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+                button.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
 
                 const filter = button.dataset.filter;
 
@@ -420,7 +477,7 @@
             });
         });
 
-        // NEW & CORRECTED TIMELINE SCROLL LOGIC
+        // Timeline Scroll Logic
         window.addEventListener('scroll', function() {
             const timelineContainer = document.getElementById('timeline-container');
             if (!timelineContainer) return;
@@ -442,6 +499,7 @@
             timelineProgress.style.height = percentage + '%';
             
             sections.forEach((section, index) => {
+                if (!section) return;
                 const sectionRect = section.getBoundingClientRect();
                 if (sectionRect.top < window.innerHeight * 0.5) {
                     dots[index].classList.add('active');
@@ -453,3 +511,4 @@
     </script>
 </body>
 </html>
+
