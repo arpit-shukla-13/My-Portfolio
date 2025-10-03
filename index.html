@@ -123,6 +123,14 @@
             <a href="#skills" class="block py-2 text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">Skills</a>
             <a href="#projects" class="block py-2 text-slate-600 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">Projects</a>
             <a href="#contact" class="block mt-2 btn-gradient text-white font-semibold px-4 py-2 rounded-lg text-center">Contact Me</a>
+            <!-- FIX: Added Theme Toggle Button for Mobile Menu -->
+            <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <span class="text-slate-600 dark:text-gray-200">Switch Theme</span>
+                <button id="theme-toggle-mobile" class="p-2 rounded-lg text-slate-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+                    <i data-lucide="moon" class="moon-icon"></i>
+                    <i data-lucide="sun" class="sun-icon"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -396,6 +404,8 @@
 
         // --- THEME AND PARTICLES SETUP ---
         const themeToggleBtn = document.getElementById('theme-toggle');
+        // FIX: Select the new mobile theme toggle button
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
         
         const darkModeParticlesConfig = {"particles":{"number":{"value":115,"density":{"enable":true,"value_area":800}},"color":{"value":"#06b6d4"},"shape":{"type":"circle"},"opacity":{"value":0.5,"random":false},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#06b6d4","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true};
         
@@ -431,10 +441,14 @@
             setAndApplyTheme('light');
         }
 
-        themeToggleBtn.addEventListener('click', function() {
+        // FIX: Create a single handler and attach it to both buttons
+        const handleThemeToggle = () => {
             const isCurrentlyDark = document.documentElement.classList.contains('dark');
             setAndApplyTheme(isCurrentlyDark ? 'light' : 'dark');
-        });
+        };
+
+        themeToggleBtn.addEventListener('click', handleThemeToggle);
+        themeToggleMobileBtn.addEventListener('click', handleThemeToggle);
 
         // --- OTHER SCRIPTS ---
         AOS.init({ duration: 1000, once: true });
@@ -512,4 +526,3 @@
     </script>
 </body>
 </html>
-
