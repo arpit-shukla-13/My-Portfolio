@@ -264,6 +264,7 @@
                     <div id="project-filters" class="flex flex-wrap justify-center gap-4 mb-12">
                         <button class="filter-btn btn-gradient text-white font-semibold px-5 py-2 rounded-lg" data-filter="all">All</button>
                         <button class="filter-btn bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="mern">MERN Stack</button>
+                        <button class="filter-btn bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="ai-ml">AI/ML</button>
                     </div>
                         <!-- Projects will be dynamically inserted here -->
                         <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
@@ -373,6 +374,28 @@
 
         // --- PROJECT DATA AND DYNAMIC RENDERING ---
         const projectsData = [
+        {
+            id: 'employee-attrition-prediction',
+            title: 'Employee Attrition Prediction',
+            image: '\\images\\Screenshot 2025-10-11 164502.png',
+            alt: 'Employee Attrition Prediction App',
+            category: 'python',
+            github: 'https://www.google.com/search?q=https://github.com/arpit-shukla-13/Employee-Attrition-Prediction-App',
+            live: 'https://www.google.com/search?q=https://huggingface.co/spaces/arpit1318/Employee-Attrition-Prediction-App',
+            short_desc: 'A web application to predict employee attrition risk using a machine learning model.',
+            tags: ['Python', 'Gradio', 'Scikit-learn', 'Pandas', 'Machine Learning'],
+            long_desc: 'This project is a machine learning-powered web application that predicts the likelihood of an employee leaving their job. It uses a Logistic Regression model trained on the IBM HR Analytics Employee Attrition & Performance dataset. The user-friendly interface, built with Gradio, allows users to input key employee metrics like monthly income, age, and total working years to get an instant attrition risk score.',
+            features: [
+            'Predicts employee attrition risk based on user-provided data.',
+            'Simple and interactive web interface created with Gradio.',
+            'Uses a trained Logistic Regression model from the Scikit-learn library.',
+            'Pre-processes input data to match the models training format.',
+            'Deployed and publicly accessible via Hugging Face Spaces.'
+            ],
+            gallery: [
+            '\\images\\Screenshot 2025-10-11 164502.png'
+            ]
+            },
             {
                 id: 'chit-chat',
                 title: 'Chit-Chat Application',
