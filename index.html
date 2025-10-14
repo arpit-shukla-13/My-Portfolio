@@ -130,8 +130,6 @@
                 <button id="theme-toggle-mobile" class="p-2 rounded-lg text-slate-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
                     <i data-lucide="moon" class="moon-icon"></i>
                     <i data-lucide="sun" class="sun-icon"></i>
-
-
                 </button>
             </div>
         </div>
@@ -163,37 +161,50 @@
                 <div class="scroll-down hidden md:block"><div class="mouse"></div></div>
             </section>
 
+            <!-- ======= About Section ======= -->
             <section id="about" class="py-16 md:py-20 bg-gray-100 dark:bg-slate-800/50">
-                <div class="container mx-auto px-4 sm:px-6" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">About Me</h2>
-                    <div class="w-full max-w-3xl mx-auto">
-                        <p class="text-slate-600 dark:text-gray-300 leading-relaxed text-center md:text-left">
-                            Welcome to my portfolio! I'm Arpit Shukla, a passionate Computer Science student at Ajay Kumar Garg Engineering College with a strong background in Computer Applications from Lucknow University. I specialize in Full Stack Development (MERN) and have hands-on experience through internships and personal projects, including building e-commerce platforms and blockchain-based dApps. I enjoy solving complex problems and continuously improving my skills in areas like Java, JavaScript, React, Node.js, MongoDB, and blockchain development. With a solution-driven mindset and a constant curiosity for emerging technologies, I aim to build impactful projects that combine innovation with real-world usability. In this ever-evolving tech world, I strive to stay ahead by learning, experimenting, and creating solutions that make a difference.
-                        </p>
-                        <div id="timeline-container" class="relative mt-12 pl-8">
-                            <div class="absolute top-0 left-0 w-1 h-full bg-slate-300 dark:bg-slate-700 rounded-full">
-                                <div id="timeline-progress" class="w-full bg-cyan-500 dark:bg-cyan-400 rounded-full" style="height: 0%;"></div>
-                            </div>
-                            <div id="education-section" class="relative mb-16">
-                                <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-300 dark:bg-slate-700 rounded-full border-4 border-gray-100 dark:border-slate-900 transition-colors duration-300"></div>
+                <div class="container mx-auto px-4 sm:px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-aos="fade-up">About Me</h2>
+                    <div class="grid md:grid-cols-5 gap-12 items-start">
+                        <!-- Left Column: Bio -->
+                        <div class="md:col-span-3" data-aos="fade-right">
+                             <h3 class="text-2xl font-semibold text-cyan-500 dark:text-cyan-400 mb-4">Who I Am</h3>
+                            <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+                                Welcome to my portfolio! I'm Arpit Shukla, a passionate Computer Science student at Ajay Kumar Garg Engineering College with a strong background in Computer Applications from Lucknow University. I specialize in Full Stack Development (MERN) and have hands-on experience through internships and personal projects, including building e-commerce platforms and blockchain-based dApps. I enjoy solving complex problems and continuously improving my skills in areas like Java, JavaScript, React, Node.js, MongoDB, and blockchain development. With a solution-driven mindset and a constant curiosity for emerging technologies, I aim to build impactful projects that combine innovation with real-world usability. In this ever-evolving tech world, I strive to stay ahead by learning, experimenting, and creating solutions that make a difference.
+                            </p>
+                        </div>
+                        <!-- Right Column: Education & Profiles -->
+                        <div class="md:col-span-2 space-y-8" data-aos="fade-left" data-aos-delay="200">
+                            <!-- Education Section -->
+                            <div>
                                 <h3 class="text-2xl font-semibold text-cyan-500 dark:text-cyan-400 mb-4">Education</h3>
                                 <div class="space-y-4">
-                                    <div class="p-4 bg-white dark:bg-slate-800/50 rounded-lg shadow-sm">
-                                        <p class="font-bold text-lg text-slate-800 dark:text-gray-200">Master's of Computer Applications (MCA)</p>
-                                        <p class="text-slate-600 dark:text-gray-400">Ajay Kumar Garg Engineering College(AKTU), Ghaziabad</p>
-                                        <p class="text-sm text-slate-500 dark:text-gray-500">2024 - 2026</p>
+                                    <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 flex items-start gap-4">
+                                        <div class="text-cyan-500 dark:text-cyan-400 mt-1">
+                                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-lg text-slate-800 dark:text-gray-200">Master's of Computer Applications (MCA)</p>
+                                            <p class="text-slate-600 dark:text-gray-400">Ajay Kumar Garg Engineering College (AKTU), Ghaziabad</p>
+                                            <p class="text-sm text-slate-500 dark:text-gray-500 mt-1">2024 - 2026</p>
+                                        </div>
                                     </div>
-                                    <div class="p-4 bg-white dark:bg-slate-800/50 rounded-lg shadow-sm">
-                                        <p class="font-bold text-lg text-slate-800 dark:text-gray-200">Bachelor's of Computer Applications (BCA)</p>
-                                        <p class="text-slate-600 dark:text-gray-400">Lucknow University, Lucknow</p>
-                                        <p class="text-sm text-slate-500 dark:text-gray-500">2021 - 2024`</p>
+                                    <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 flex items-start gap-4">
+                                       <div class="text-cyan-500 dark:text-cyan-400 mt-1">
+                                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-lg text-slate-800 dark:text-gray-200">Bachelor's of Computer Applications (BCA)</p>
+                                            <p class="text-slate-600 dark:text-gray-400">Lucknow University, Lucknow</p>
+                                            <p class="text-sm text-slate-500 dark:text-gray-500 mt-1">2021 - 2024</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="profiles-section" class="relative">
-                                <div class="timeline-dot absolute -left-[38px] top-2 w-4 h-4 bg-slate-300 dark:bg-slate-700 rounded-full border-4 border-gray-100 dark:border-slate-900 transition-colors duration-300"></div>
+                            <!-- Profiles Section -->
+                            <div>
                                 <h3 class="text-2xl font-semibold text-cyan-500 dark:text-cyan-400 mb-4">Profiles & Socials</h3>
-                                <div class="flex flex-wrap gap-4">
+                                <div class="flex flex-wrap gap-3">
                                     <a href="https://github.com/arpit-shukla-13" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700/80 hover:text-cyan-500 dark:hover:text-cyan-400 text-slate-700 dark:text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">
                                         <i data-lucide="github" class="w-5 h-5"></i> GitHub
                                     </a>
@@ -266,8 +277,8 @@
                         <button class="filter-btn bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="mern">MERN Stack</button>
                         <button class="filter-btn bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold px-5 py-2 rounded-lg transition" data-filter="ai-ml">AI/ML</button>
                     </div>
-                        <!-- Projects will be dynamically inserted here -->
-                        <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                                <!-- Projects will be dynamically inserted here -->
+                                <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                 </div>
             </section>
 
@@ -644,35 +655,7 @@
         // Back button
         backToProjectsBtn.addEventListener('click', hideProjectDetail);
 
-        // Timeline Scroll Logic
-        window.addEventListener('scroll', function() {
-            const timelineContainer = document.getElementById('timeline-container');
-            if (!timelineContainer) return;
-
-            const timelineProgress = document.getElementById('timeline-progress');
-            const dots = document.querySelectorAll('.timeline-dot');
-            const sections = [document.getElementById('education-section'), document.getElementById('profiles-section')];
-            const containerRect = timelineContainer.getBoundingClientRect();
-            const startPoint = window.innerHeight * 0.8;
-            const endPoint = window.innerHeight * 0.2;
-            const totalScrollDistance = startPoint - endPoint;
-            const scrolledDistance = startPoint - containerRect.top;
-            const progressPercentage = (scrolledDistance / totalScrollDistance) * 100;
-            const percentage = Math.max(0, Math.min(100, progressPercentage));
-
-            timelineProgress.style.height = percentage + '%';
-            
-            sections.forEach((section, index) => {
-                if (!section) return;
-                const sectionRect = section.getBoundingClientRect();
-                if (sectionRect.top < window.innerHeight * 0.5) {
-                    dots[index].classList.add('active');
-                } else {
-                    dots[index].classList.remove('active');
-                }
-            });
-        });
+        // Remove the old timeline scroll logic as it is no longer used
     </script>
 </body>
 </html>
-
