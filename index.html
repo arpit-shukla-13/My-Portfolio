@@ -388,6 +388,56 @@
 
         // --- PROJECT DATA AND DYNAMIC RENDERING ---
         const projectsData = [
+            {
+             id: 'pdf-chat-bot',
+             title: 'AI-Powered PDF Reader & Chatbot',
+             image: '/images/pdf-chat-main.png', // Apni project ka screenshot yahan lagana
+             alt: 'PDF Chatbot Interface',
+             category: 'frontend-ai',
+             github: 'https://github.com/arpit-shukla-13/pdf-chatbot',
+             live: 'https://YOUR-NETLIFY-APP-NAME.netlify.app/', // Yahan apna Netlify link paste karein
+             short_desc: 'An interactive document assistant that lets users chat with their PDFs using Gemini AI.',
+             tags: ['React', 'Vite', 'Tailwind CSS', 'Google Gemini API', 'PDF.js'],
+             long_desc: 'A responsive web application designed to make document reading interactive. Users can upload any PDF file, and the application processes it entirely on the client side using PDF.js for enhanced privacy (no file upload to server). It integrates Google\'s Gemini 2.5 Flash model to understand the document context, allowing users to ask questions, get summaries, and find specific details instantly. The interface supports both Dark and Light modes for a comfortable reading experience.',
+             features: [
+                 'Client-side PDF Text Extraction using PDF.js (Privacy-focused).',
+                 'Context-aware AI Chat powered by Google Gemini 2.5 Flash API.',
+                 'Real-time streaming-like interaction with loading states.',
+                 'Responsive UI built with Tailwind CSS supporting Dark/Light Mode.',
+                 'Secure Environment Variable management for API keys.',
+                 'Optimized for large text contexts with smart prompt handling.'
+             ],
+             gallery: [
+                 '/images/pdf-chat-upload.png',   // Upload screen ka screenshot
+                 '/images/pdf-chat-dark.png',     // Dark mode ka screenshot
+                 '/images/pdf-chat-response.png'  // AI response ka screenshot
+             ]
+         },
+            {
+                id: 'ai-assessment-platform',
+                title: 'AI-Powered Assessment Platform',
+                image: '/images/assessment-main.png', 
+                alt: 'AI Assessment Platform Dashboard',
+                category: 'mern', 
+                github: 'https://github.com/arpit-shukla-13/video-assessment-platform',
+                live: 'https://video-assessment-platform.vercel.app/',
+                short_desc: 'An intelligent recruitment tool that generates technical quizzes from resumes using AI.',
+                tags: ['Next.js', 'Spring Boot', 'PostgreSQL', 'Keycloak', 'Groq AI', 'Docker'],
+                long_desc: 'This is a cutting-edge recruitment platform designed to automate technical screening. It allows candidates to upload their resumes (PDF), which are parsed to extract skills. The system then uses Groq AI (Llama-3 model) to dynamically generate a unique set of technical questions based on the candidate\'s profile. It features enterprise-grade security with Keycloak for authentication and a robust Spring Boot backend connected to a PostgreSQL database.',
+                features: [
+                    'Resume Parsing using Apache PDFBox to extract candidate skills.',
+                    'AI-driven Question Generation using Groq API (Llama-3) for unique tests.',
+                    'Secure Authentication via Keycloak (OAuth2/OpenID Connect).',
+                    'Dynamic Scoring System that calculates results instantly.',
+                    'User Dashboard with history tracking and detailed result analysis.',
+                    'Hybrid Architecture: Next.js Frontend (Vercel) & Spring Boot Backend (Render).'
+                ],
+                gallery: [
+                    '/images/assessment-dashboard.png', 
+                    '/images/assessment-quiz.png',      
+                    '/images/assessment-result.png'     
+                ]
+            },
         {
                 id: 'face-recognition-attendance',
                 title: 'Smart Contactless Attendance System',
