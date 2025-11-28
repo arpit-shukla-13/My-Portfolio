@@ -369,10 +369,9 @@
                 }
                 particlesJS('particles-js', lightModeParticlesConfig);
             }
+            
         }
 
-
-        
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const savedTheme = localStorage.getItem('color-theme');
         if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
