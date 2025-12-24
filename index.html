@@ -371,7 +371,6 @@
             }
 
         }
-
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const savedTheme = localStorage.getItem('color-theme');
         if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
@@ -797,8 +796,6 @@
         });
         // Back button
         backToProjectsBtn.addEventListener('click', hideProjectDetail);
-
     </script>
-
 </body>
 </html>
